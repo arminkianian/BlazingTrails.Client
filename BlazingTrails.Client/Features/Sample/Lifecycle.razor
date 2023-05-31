@@ -1,0 +1,42 @@
+﻿@page "/Lifecycle"
+@implements IAsyncDisposable
+
+<h1>Component Lifecycle</h1>
+<p>Check the browser console for details...</p>
+
+@code {
+    //NOTE SetParametersAsync is not a life cycle method that is often used by developers.Commonly,
+    // it is just OnInitialized, OnParametersSet, and OnAfterRender.
+    // In advanced scenarios, you may choose to override SetParametersAsync and not call the base method of SetParametersAsync.
+    // Doing so would allow complete control over the component’s initialization and subsequent updates.
+    // This can be a useful tool when creating highly performant components
+    public override async Task SetParametersAsync(ParameterView parameters)
+    {
+        Console.WriteLine("SetParametersAsync - Begin");
+
+        //calling the base method does two essential things:
+        // 1. Sets the values for any parameters the component defines
+        // 2. Calls the correct life cycle methods
+        await base.SetParametersAsync(parameters);
+        Console.WriteLine("SetParametersAsync - End");
+    }
+
+    protected override void OnInitialized() => Console.WriteLine("OnInitialized");
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine("OnInitializedAsync - Begin");
+        await Task.Delay(300);
+        Console.WriteLine("OnInitializedAsync - End");
+    }
+
+    protected override void OnParametersSet() => Console.WriteLine("OnParametersSet");
+    protected override async Task OnParametersSetAsync() => Console.WriteLine("OnParametersSetAsync");
+
+    protected override void OnAfterRender(bool firstRender) => Console.WriteLine($"OnAfterRender (First render: {firstRender})");
+    protected override async Task OnAfterRenderAsync(bool firstRender) => Console.WriteLine($"OnAfterRenderAsync (First render: {firstRender})");
+
+    public async ValueTask DisposeAsync()
+    {
+        Console.WriteLine($"Dispose");
+    }
+}
