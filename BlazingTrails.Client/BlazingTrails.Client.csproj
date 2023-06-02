@@ -14,6 +14,7 @@
 
 	<ItemGroup>
 		<Watch Include="**/*.scss" />
+		<Watch Remove="Features\Home\SearchFilter.razor.scss" />
 		<None Update="**/*.css" Watch="false" />
 	</ItemGroup>
 
