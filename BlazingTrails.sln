@@ -5,9 +5,9 @@ VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingTrails.Client", "BlazingTrails.Client\BlazingTrails.Client.csproj", "{20025BF5-4B7E-4424-A2A9-ACC0A4320A2A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingTrails.Api", "BlazingTrails.Api\BlazingTrails.Api.csproj", "{602CD3D2-247D-475E-9CAA-249E17DF0C13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingTrails.Api", "BlazingTrails.Api\BlazingTrails.Api.csproj", "{602CD3D2-247D-475E-9CAA-249E17DF0C13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlazingTrails.Shared", "BlazingTrails.Shared\BlazingTrails.Shared.csproj", "{1FFCD022-3EFF-4F89-B368-12C74BEFFE35}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BlazingTrails.Shared", "BlazingTrails.Shared\BlazingTrails.Shared.csproj", "{1FFCD022-3EFF-4F89-B368-12C74BEFFE35}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
