@@ -1,4 +1,5 @@
 using BlazingTrails.Client;
+using MediatR;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 
@@ -17,6 +18,8 @@ builder.Services.AddScoped(sp => new HttpClient
 {
     BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
 });
+
+builder.Services.AddMediatR(typeof(Program).Assembly);
 
 // Build and run an instance of WebAssemblyHost
 // using the configuration defined with the WebAssemblyHostBuilder
