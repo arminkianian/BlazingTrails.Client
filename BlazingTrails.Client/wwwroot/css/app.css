@@ -74,15 +74,3 @@ a {
 .validation-message {
     color: red;
 }
-
-input.invalid,
-textarea.invalid,
-select.invalid {
-    border-color: red;
-}
-
-input.valid.modified,
-textarea.valid.modified,
-select.valid.modified {
-    border-color: green;
-}
