@@ -68,10 +68,16 @@ else if (_errorMessage is not null)
     </FormSection>
 
     <FormSection Title="Difficulty" HelpText="Help other hikers out by telling them the length of the trail is how long it might take them.">
-        <FormFieldSet>
+        <FormFieldSet Width="col-3">
             <label for="trailLength" class="font-weight-bold text-secondary">Length (km)</label>
             <InputNumber @bind-Value="_trail.Length" class="form-control" id="trailLength" />
             <ValidationMessage For="()=> _trail.Length" />
+        </FormFieldSet>
+
+        <FormFieldSet Width="col-5">
+            <label for="trailTime" class="font-weight-bold text-secondary">Time</label>
+            <InputTime @bind-Value="_trail.TimeInMinutes" class="form-control" id="trailTime" />
+            <ValidationMessage For="()=> _trail.TimeInMinutes" />
         </FormFieldSet>
     </FormSection>
 

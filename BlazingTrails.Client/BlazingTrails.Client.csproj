@@ -19,6 +19,7 @@
 		<Watch Include="**/*.scss" />
 		<Watch Remove="Features\Home\SearchFilter.razor.scss" />
 		<Watch Remove="Features\ManageTrails\FormSection.razor.scss" />
+		<Watch Remove="Features\ManageTrails\InputTime.razor.scss" />
 		<ProjectReference Include="..\BlazingTrails.Shared\BlazingTrails.Shared.csproj" />
 		<None Update="**/*.css" Watch="false" />
 	</ItemGroup>
@@ -42,4 +43,12 @@
 
 		<Exec Command="npm run sass -- %(ScopedScssFiles.Identity) %(relativedir)%(filename).css" />
 	</Target>
+
+	<ItemGroup>
+	  <UpToDateCheckInput Remove="Features\ManageTrails\InputTime.razor" />
+	</ItemGroup>
+
+	<ItemGroup>
+	  <_ContentIncludedByDefault Remove="Features\ManageTrails\InputTime.razor" />
+	</ItemGroup>
 </Project>
