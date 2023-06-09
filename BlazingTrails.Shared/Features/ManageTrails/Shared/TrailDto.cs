@@ -1,6 +1,6 @@
 ﻿using FluentValidation;
 
-namespace BlazingTrails.Shared.Features.ManageTrails
+namespace BlazingTrails.Shared.Features.ManageTrails.Shared
 {
     public class TrailDto
     {
@@ -10,6 +10,8 @@ namespace BlazingTrails.Shared.Features.ManageTrails
         public string Location { get; set; } = "";
         public int TimeInMinutes { get; set; }
         public int Length { get; set; }
+        public string? Image { get; set; }
+        public ImageAction ImageAction { get; set; }
         public List<RouteInstruction> Route { get; set; } = new List<RouteInstruction>();
 
         public class RouteInstruction
