@@ -1,4 +1,4 @@
-﻿export function initialize(hostElement) {
+﻿export function initialize(hostElement, routeMapComponent) {
 
     hostElement.map = L.map(hostElement).setView([51.700, -0.10], 3);
 
@@ -17,6 +17,8 @@
         hostElement.waypoints.push(waypoint);
         let line = L.polyline(hostElement.waypoints.map(m => m.getLatLng()), { color: 'var(--brand)' }).addTo(hostElement.map);
         hostElement.lines.push(line);
+
+        routeMapComponent.invokeMethodAsync('WaypointAdded', e.latlng.lat, e.latlng.lng);
     });
 }
 
