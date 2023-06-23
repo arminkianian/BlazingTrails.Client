@@ -4,14 +4,15 @@
 @implements IDisposable
 
 <div class="map-wrapper">
-    <div class="controls">
-        <button @onclick="DeleteLastWaypoint"
-                class="btn btn-secondary" title="Delete last waypoint"
-                type="button">
-            <i class="bi bi-trash"></i>
-            Remove Last Waypoint
-        </button>
-    </div>
+    @if (!IsReadOnly)
+    {
+        <div class="controls">
+            <button @onclick="DeleteLastWaypoint" class="btn btn-secondary"
+                    title="Delete last waypoint" type="button">
+                <i class="bi bi-trash"></i> Remove Last Waypoint
+            </button>
+        </div>
+    }
     <div style="height: @(Height); width:@(Width);" @ref="_map"></div>
 </div>
 
@@ -20,8 +21,12 @@
     private IJSObjectReference? _routeMapModule;
     private DotNetObjectReference<RouteMap> _routeMapReference;
 
+    [Parameter] public bool IsReadOnly { get; set; }
     [Parameter] public string Height { get; set; } = "500px";
     [Parameter] public string Width { get; set; } = "1000px";
+    [Parameter] public List<LatLong> Waypoints { get; set; } = new List<LatLong>();
+    [Parameter] public EventCallback<LatLong> OnWaypointAdded { get; set; }
+    [Parameter] public EventCallback<LatLong> OnWaypointDeleted { get; set; }
 
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -29,13 +34,13 @@
         {
             _routeMapModule = await JSRuntime.InvokeAsync<IJSObjectReference>("import", "./_content/BlazingTrails.ComponentLibrary/Map/RouteMap.razor.js");
             _routeMapReference = DotNetObjectReference.Create(this);
-            await _routeMapModule.InvokeVoidAsync("initialize", _map, _routeMapReference);
+            await _routeMapModule.InvokeVoidAsync("initialize", _map, _routeMapReference, Waypoints, IsReadOnly);
         }
     }
 
     [JSInvokable]
-    public void WaypointAdded(decimal latitude, decimal longitude)
-                => Console.WriteLine($"Added Waypoint - Latitude: {latitude}, Longitude {longitude}");
+    public async Task WaypointAdded(decimal latitude, decimal longitude)
+                        => await OnWaypointAdded.InvokeAsync(new LatLong(latitude, longitude));
 
     async ValueTask IAsyncDisposable.DisposeAsync()
     {
@@ -49,8 +54,8 @@
     {
         if (_routeMapModule is not null)
         {
-            var message = await _routeMapModule.InvokeAsync<string>("deleteLastWaypoint", _map);
-            Console.WriteLine(message);
+            var waypoint = await _routeMapModule.InvokeAsync<LatLong>("deleteLastWaypoint", _map, _routeMapReference);
+            await OnWaypointDeleted.InvokeAsync(waypoint);
         }
     }
 

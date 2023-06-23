@@ -22,7 +22,7 @@ namespace BlazingTrails.Api.Features.ManageTrails.EditTrail
         {
             var trail = await _database
                 .Trails
-                .Include(x => x.Route)
+                .Include(x => x.Waypoints)
                 .SingleOrDefaultAsync(x => x.Id == request.Trail.Id, cancellationToken: cancellationToken);
 
             if (trail is null)
@@ -35,11 +35,10 @@ namespace BlazingTrails.Api.Features.ManageTrails.EditTrail
             trail.Location = request.Trail.Location;
             trail.TimeInMinutes = request.Trail.TimeInMinutes;
             trail.Length = request.Trail.Length;
-            trail.Route = request.Trail.Route.Select(ri => new RouteInstruction
+            trail.Waypoints = request.Trail.Waypoints.Select(wp => new Waypoint
             {
-                Stage = ri.Stage,
-                Description = ri.Description,
-                Trail = trail
+                Latitude = wp.Latitude,
+                Longitude = wp.Longitude
             }).ToList();
 
             if (request.Trail.ImageAction == ImageAction.Remove)
