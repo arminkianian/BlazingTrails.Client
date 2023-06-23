@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Reflection;
 using FluentValidation.AspNetCore;
 using Microsoft.Extensions.FileProviders;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +15,16 @@ builder.Services.AddDbContext<BlazingTrailsContext>(options =>
 
 builder.Services.AddControllers()
     .AddFluentValidation(fv => fv.RegisterValidatorsFromAssembly(Assembly.Load("BlazingTrails.Shared")));
+
+builder.Services.AddAuthentication(options =>
+{
+    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+}).AddJwtBearer(options =>
+{
+    options.Authority = builder.Configuration["Auth0:Authority"];
+    options.Audience = builder.Configuration["Auth0:ApiIdentifier"];
+});
 
 var app = builder.Build();
 
@@ -33,6 +45,9 @@ app.UseStaticFiles(new StaticFileOptions()
 });
 
 app.UseRouting();
+
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllers();
 app.MapFallbackToFile("index.html"); //If a request doesn’t match to a controller, serve the index.html file from the Blazor project.
