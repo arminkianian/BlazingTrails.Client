@@ -1,6 +1,7 @@
 using BlazingTrails.Client;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
+using System.Security.Claims;
 
 //Just like other ASP.NET Core applications,
 //Blazor apps start off as .NET console apps.
@@ -24,6 +25,10 @@ builder.Services.AddOidcAuthentication(options =>
     {
         builder.Configuration.Bind("Auth0", options.ProviderOptions);
         options.ProviderOptions.ResponseType = "code";
+
+        //By default, Auth0 returns the user’s email address as the value for the name claim.
+        //Blazor, by default, maps the name claim to the Name property on the User.Identity object
+        //options.UserOptions.NameClaim = ClaimTypes.Name;
     });
 
 // Build and run an instance of WebAssemblyHost
