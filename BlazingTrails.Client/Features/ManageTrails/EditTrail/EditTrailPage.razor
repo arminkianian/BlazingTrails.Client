@@ -1,4 +1,5 @@
 ﻿@page "/edit-trail/{TrailId:int}"
+@attribute [Authorize]
 @using BlazingTrails.Shared.Features.ManageTrails.EditTrail;
 @inject IMediator Mediator
 
