@@ -27,8 +27,10 @@ namespace BlazingTrails.Api.Features.ManageTrails.EditTrail
                 return BadRequest("Trail could not be found.");
             }
 
-            if (!trail.Owner.Equals(HttpContext.User.Identity!.Name, StringComparison.OrdinalIgnoreCase))
+            if (!trail.Owner.Equals(HttpContext.User.Identity!.Name, StringComparison.OrdinalIgnoreCase) && !HttpContext.User.IsInRole("Administrator"))
+            {
                 return Unauthorized();
+            }
 
             var response = new GetTrailRequest.Response(new GetTrailRequest.Trail(trail.Id,
                 trail.Name,
