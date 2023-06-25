@@ -1,5 +1,6 @@
 using BlazingTrails.Client;
 using Microsoft.AspNetCore.Components.Web;
+using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using System.Security.Claims;
 
@@ -15,6 +16,10 @@ builder.RootComponents.Add<HeadOutlet>("head::after"); //enables us to make modi
 
 // Configure and register services with the IServiceCollection
 builder.Services.AddMediatR(config => config.RegisterServicesFromAssembly(typeof(Program).Assembly));
+
+builder.Services
+    .AddHttpClient("SecureAPIClient", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+    .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
 builder.Services.AddScoped(sp => new HttpClient
 {
