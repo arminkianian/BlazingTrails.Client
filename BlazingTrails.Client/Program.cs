@@ -1,5 +1,6 @@
 using BlazingTrails.Client;
 using BlazingTrails.Client.Features.Auth;
+using BlazingTrails.Client.State;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -36,6 +37,8 @@ builder.Services.AddOidcAuthentication(options =>
         //Blazor, by default, maps the name claim to the Name property on the User.Identity object
         //options.UserOptions.NameClaim = ClaimTypes.Name;
     }).AddAccountClaimsPrincipalFactory<CustomUserFactory<RemoteUserAccount>>();
+
+builder.Services.AddScoped<AppState>();
 
 // Build and run an instance of WebAssemblyHost
 // using the configuration defined with the WebAssemblyHostBuilder
